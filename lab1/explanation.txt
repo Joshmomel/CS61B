@@ -1,1 +1,6 @@
 my lab 1 solution 
+
+my tast on 25 Nov. 2018
+
+The code of leap year has been add a new method, finding that if the 
+given year is leap year
