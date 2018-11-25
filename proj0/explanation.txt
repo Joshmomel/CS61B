@@ -1,0 +1,5 @@
+my project0 solution 
+
+my tast on 26 Nov. 2018
+
+Update the read file such that it can read all documents.
