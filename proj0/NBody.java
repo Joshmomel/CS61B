@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class NBody{
 
-    public static String imageToDraw = "images/starfield.jpg";
+    private static String imageToDraw = "images/starfield.jpg";
 
     public static double readRadius(String path){
         In in = new In(path);
