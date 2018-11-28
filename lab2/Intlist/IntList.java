@@ -118,7 +118,7 @@ public class IntList {
         }
 
         if (B == null){
-            return newList;
+            return p;
         }
         newList.rest = new IntList(B.first, null);
         newList = newList.rest;
