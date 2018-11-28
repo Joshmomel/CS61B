@@ -48,3 +48,8 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
