@@ -120,21 +120,20 @@ public class LinkedListDeque<T> {
         return recursiveGet(n.next, index - 1);
     }
 
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> LinkedListDeque = new LinkedListDeque<>();
-        LinkedListDeque.addFirst(0);
-        LinkedListDeque.addLast(1);
-        LinkedListDeque.addLast(2);
-        LinkedListDeque.addFirst(3);
-        System.out.println( LinkedListDeque.isEmpty());
-        LinkedListDeque.removeLast();
-        LinkedListDeque.addFirst(6);
-        LinkedListDeque.addFirst(7);
-        LinkedListDeque.addLast(8);
-        LinkedListDeque.removeFirst();
-        LinkedListDeque.addLast(10);
-        System.out.println(LinkedListDeque.size());
-
-    }
+    // public static void main(String[] args) {
+    //     LinkedListDeque<Integer> LinkedListDeque = new LinkedListDeque<>();
+    //     LinkedListDeque.addFirst(0);
+    //     LinkedListDeque.addLast(1);
+    //     LinkedListDeque.addLast(2);
+    //     LinkedListDeque.addFirst(3);
+    //     System.out.println( LinkedListDeque.isEmpty());
+    //     LinkedListDeque.removeLast();
+    //     LinkedListDeque.addFirst(6);
+    //     LinkedListDeque.addFirst(7);
+    //     LinkedListDeque.addLast(8);
+    //     LinkedListDeque.removeFirst();
+    //     LinkedListDeque.addLast(10);
+    //     System.out.println(LinkedListDeque.size());
+    // }
 
 }
