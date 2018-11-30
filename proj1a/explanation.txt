@@ -3,3 +3,4 @@ my project1a solution
 my task on 29 Nov. 2018
 
 Update the read file such that it can read all documents.
+Update the the ArrayDeque
