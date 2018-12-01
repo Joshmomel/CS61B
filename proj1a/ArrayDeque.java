@@ -23,12 +23,25 @@ public class ArrayDeque <T> {
         nextLast = (nextLast + 1) % items.length;
     }
 
+    private int respect(int index, int length){
+        return index % length;
+    }
+
     private int plusOne(int index){
         return (index + 1) % items.length;
     }
 
+    private int plusOne(int index, int length){
+        return (index + 1) % length;
+    }
+
+
     private int minusOne(int index){
         return (index + items.length -1) % items.length;
+    }
+
+    private int minusOne(int index, int length){
+        return (index + length -1) % length;
     }
 
     private boolean isFull(){
@@ -52,19 +65,36 @@ public class ArrayDeque <T> {
 
         if (capacity < size){
             int start = Math.min(nextFirst, nextLast);
-            for (int i = 0; i < capacity; i++) {
-                a[i] = items[start];
-                start ++;
-            }
-            if (checkLarger(nextFirst,nextLast)){
-                nextLast = 0;
-                nextFirst = capacity / 2;
-            }else {
+            int first = nextFirst;
+            int p = respect(start, capacity);
+            if (!checkLarger(nextFirst,nextLast)) {
+                for (int i = 0; i < capacity; i++) {
+                    a[i] = items[start];
+                    start = plusOne(start);
+                }
                 nextFirst = 0;
                 nextLast = capacity / 2;
+            }else{
+                for (int i = 0; i < capacity; i++) {
+                    start = minusOne(start, items.length);
+                    p = minusOne(p, capacity);
+                    a[p] = items[start];
+
+                }
+                nextFirst = respect(first, capacity);
+                System.out.println();
             }
         }else {
-            
+            if (nextFirst == items.length - 1){
+                int temp = minusOne(nextLast);
+                System.arraycopy(items, 0, a, 0 ,nextFirst + 1);
+                nextFirst = a.length - 1;
+                nextLast = temp + 1;
+            }else {
+                System.arraycopy(items, 0, a, 0, nextLast);
+                System.arraycopy(items, nextLast, a, size + nextFirst + 1, size - nextLast);
+                nextFirst = size + nextFirst;
+            }
         }
         items = a;
         System.out.println();
@@ -141,47 +171,56 @@ public class ArrayDeque <T> {
         return items[(nextFirst + 1 + index) % items.length ];
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addFirst(1);
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+//        arrayDeque.addFirst(1);
 //        arrayDeque.addFirst(2);
 //        arrayDeque.addFirst(3);
 //        arrayDeque.addFirst(4);
 //        arrayDeque.addFirst(5);
-        arrayDeque.addLast(-1);
-        arrayDeque.addLast(-2);
-        arrayDeque.addLast(-3);
-        arrayDeque.addLast(-4);
-        arrayDeque.addLast(-5);
-        arrayDeque.addLast(-6);
-        arrayDeque.addLast(-7);
-        arrayDeque.addLast(-8);
-        arrayDeque.addLast(-9);
-        arrayDeque.addLast(-10);
-        arrayDeque.addLast(-11);
-        arrayDeque.addLast(-12);
-        arrayDeque.addLast(-13);
-        arrayDeque.addLast(-14);
-        arrayDeque.addLast(-15);
-
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-        arrayDeque.removeLast();
-
-
-        arrayDeque.removeFirst();
-
-        System.out.println();
-    }
+//        arrayDeque.addLast(-1);
+//        arrayDeque.addLast(-2);
+//        arrayDeque.addLast(-3);
+//        arrayDeque.addLast(-4);
+//        arrayDeque.addLast(-5);
+//        arrayDeque.addLast(-6);
+//        arrayDeque.addLast(-7);
+//        arrayDeque.addLast(-8);
+//        arrayDeque.addLast(-9);
+//        arrayDeque.addLast(-10);
+//        arrayDeque.addLast(-11);
+//        arrayDeque.addLast(-11);
+//        arrayDeque.addLast(-11);
+//        arrayDeque.addLast(-11);
+//        arrayDeque.addLast(-11);
+//        arrayDeque.addLast(-11);
+//
+//
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//        arrayDeque.removeLast();
+//
+//
+//
+//        arrayDeque.removeFirst();
+//
+//        System.out.println();
+//    }
 
 
 
