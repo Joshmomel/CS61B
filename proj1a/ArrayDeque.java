@@ -136,12 +136,13 @@ public class ArrayDeque<T> {
         if (isSparse()) {
             shrink();
         }
-        if (size < 1) {
-            return null;
-        }
         nextFirst = plusOne(nextFirst);
         T returnItem = items[nextFirst];
         items[nextFirst] = null;
+        if (size > 1) {
+            size--;
+
+        }
         return returnItem;
     }
 
@@ -149,13 +150,12 @@ public class ArrayDeque<T> {
         if (isSparse()) {
             shrink();
         }
-        if (size < 1) {
-            return null;
-        }
         nextLast = minusOne(nextLast);
         T returnItem = items[nextLast];
         items[nextLast] = null;
-        size--;
+        if (size > 1) {
+            size--;
+        }
         return returnItem;
     }
 
