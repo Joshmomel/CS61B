@@ -60,10 +60,10 @@ public class ArrayDeque<T> {
         return f > l;
     }
 
-    private void reSize(int size, int capacity) {
+    private void reSize(int inputSize, int capacity) {
         T[] a = (T[]) new Object[capacity];
 
-        if (capacity < size) {
+        if (capacity < inputSize) {
             int start = Math.min(nextFirst, nextLast);
             int first = nextFirst;
             int p = respect(start, capacity);
@@ -140,7 +140,7 @@ public class ArrayDeque<T> {
         T returnItem = items[nextFirst];
         items[nextFirst] = null;
         size--;
-        if (size < 0){
+        if (size < 0) {
             size = 0;
         }
         return returnItem;
@@ -154,7 +154,7 @@ public class ArrayDeque<T> {
         T returnItem = items[nextLast];
         items[nextLast] = null;
         size--;
-        if (size < 0){
+        if (size < 0) {
             size = 0;
         }
         return returnItem;
