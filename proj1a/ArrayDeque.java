@@ -56,8 +56,8 @@ public class ArrayDeque<T> {
         reSize(items.length, items.length / RFACTOR);
     }
 
-    private boolean checkLarger(int nextFirst, int nextLast) {
-        return nextFirst > nextLast;
+    private boolean checkLarger(int f, int l) {
+        return f > l;
     }
 
     private void reSize(int size, int capacity) {
@@ -140,6 +140,9 @@ public class ArrayDeque<T> {
         T returnItem = items[nextFirst];
         items[nextFirst] = null;
         size--;
+        if (size < 0){
+            size = 0;
+        }
         return returnItem;
     }
 
@@ -151,6 +154,9 @@ public class ArrayDeque<T> {
         T returnItem = items[nextLast];
         items[nextLast] = null;
         size--;
+        if (size < 0){
+            size = 0;
+        }
         return returnItem;
     }
 
