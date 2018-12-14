@@ -5,7 +5,7 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -82,13 +82,13 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         IntList p = A;
-        if (A == null){
+        if (A == null) {
             return B;
         }
-        if (A.rest == null){
+        if (A.rest == null) {
             A.rest = B;
         }
-        while(A.rest != null){
+        while (A.rest != null) {
             A = A.rest;
         }
         A.rest = B;
@@ -101,8 +101,8 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
 
-        if (A == null){
-            if (B == null){
+        if (A == null) {
+            if (B == null) {
                 return null;
             }
             return B;
@@ -111,18 +111,18 @@ public class IntList {
         IntList newList = new IntList(A.first, null);
         IntList p = newList;
 
-        while(A.rest != null){
+        while (A.rest != null) {
             A = A.rest;
-            newList.rest = new IntList(A.first,null);
+            newList.rest = new IntList(A.first, null);
             newList = newList.rest;
         }
 
-        if (B == null){
+        if (B == null) {
             return p;
         }
         newList.rest = new IntList(B.first, null);
         newList = newList.rest;
-        while (B.rest != null){
+        while (B.rest != null) {
             B = B.rest;
             newList.rest = new IntList(B.first, null);
             newList = newList.rest;
@@ -131,13 +131,18 @@ public class IntList {
         return p;
     }
 
-    public static IntList reverse(IntList a){
-        if (a.rest == null){
+    public static IntList reverse(IntList a) {
+        if (a == null) {
+            return null;
+        }
+
+        if (a.rest == null) {
             return a;
         }
+
         IntList next = a.rest;
         a.rest = null;
-        while(next.rest != null){
+        while (next.rest != null) {
             IntList p = next.rest;
             next.rest = a;
             a = next;
@@ -147,20 +152,6 @@ public class IntList {
         return next;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
