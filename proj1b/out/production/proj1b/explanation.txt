@@ -1,0 +1,7 @@
+my project1b solution
+
+my task on 14 Dec. 2018
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
