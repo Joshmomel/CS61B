@@ -8,8 +8,6 @@ import java.util.Random;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
     public static Random rand;
 
 
@@ -32,29 +30,16 @@ public class Game {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        // TODO: Fill out this method to run the game using the input passed in,
-        // and return a 2D tile representation of the world that would have been
-        // drawn if the same inputs had been given to playWithKeyboard().
         TETile[][] world = WorldCreator.createEmptyWorld();
         Game.rand = Data.setGameSeed(input);
         int numRooms = rand.nextInt(15) + 5;
         Room[] rooms = new Room[numRooms];
         MapGenerator.generateRooms(world, numRooms, rooms);
-
-//        PathGenerator.drawPath(world, new Room(5, 5, WIDTH / 2, HEIGHT / 2), rooms[0]);
-        for (int i = 0; i < numRooms - 1; i++) {
-            PathGenerator.drawPath(world,rooms[i],rooms[i + 1]);
-        }
-//        PathGenerator.drawPath(world, rooms[numRooms - 1], new Room(5, 5, 1, 1));
-
+        PathGenerator.drawAllPaths(world, numRooms, rooms);
         MapGenerator.fillWalls(world);
-
-
-
         System.out.println(TETile.toString(world));
-        WorldCreator.display(world);
-
-
         return world;
     }
+
+
 }

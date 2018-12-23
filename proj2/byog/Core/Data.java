@@ -4,8 +4,8 @@ package byog.Core;
 import java.util.Random;
 
 public class Data {
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 30;
     private static long seed = 0;
 
 
