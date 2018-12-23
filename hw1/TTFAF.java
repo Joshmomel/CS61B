@@ -12,18 +12,18 @@ import java.util.zip.GZIPInputStream;
  */
 public class TTFAF {
     public static void main(String[] args) {
-        try {
-            InputStream source = new ByteArrayInputStream(Base64.getDecoder().decode(TTFAF));
-            source = new GZIPInputStream(source);
-            GuitarPlayer player = new GuitarPlayer(source);
-            player.play();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            InputStream source = new ByteArrayInputStream(Base64.getDecoder().decode(TTFAF));
+//            source = new GZIPInputStream(source);
+////            GuitarPlayer player = new GuitarPlayer(source);
+////            player.play();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // You can also do this:
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("path/to/music.mid"));
-        // player.play();
+         GuitarPlayer player = new GuitarPlayer(new java.io.File("/Users/boxianmo/Desktop/Falu_Aire_Milonga.mid"));
+         player.play();
     }
 
     private static final String TTFAF =

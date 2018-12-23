@@ -1,0 +1,9 @@
+my hw1 solution
+
+my task on 16 Dec. 2018
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+
+
