@@ -77,6 +77,7 @@ public class MapGenerator implements Serializable {
         }
     }
 
+
     public static void moveLeft(TETile[][] world, Player player) {
         int x = player.position.x;
         int y = player.position.y;
@@ -138,8 +139,82 @@ public class MapGenerator implements Serializable {
         }
     }
 
+    public static void moveNoDrawTop(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x, y + 1);
+        System.out.println("top world is " + world[x][y].description());
+        if (isClear(world, checkWallPosition)) {
+            System.out.println("tile is " + world[x + 1][y].description());
+            if (world[x][y + 1].description().equals("flower")) {
+                player.flowers++;
+            }
+            world[x][y] = Tileset.FLOOR;
+            world[x][y + 1] = player.playerTile;
+            y += 1;
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move top");
+        }
+    }
+    public static void moveNoDrawLeft(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x- 1, y);
+        System.out.println("left world is " + world[x][y].description());
+        if (isClear(world, checkWallPosition)) {
+            System.out.println("tile is " + world[x - 1][y].description());
+
+            if (world[x - 1][y].description().equals("flower")) {
+                player.flowers++;
+            }
+            world[x][y] = Tileset.FLOOR;
+            world[x - 1][y] = player.playerTile;
+            x -= 1;
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move left");
+        }
+    }
+    public static void moveNoDrawDown(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x, y - 1);
+        System.out.println("down world is " + world[x][y].description());
+        if (isClear(world, checkWallPosition)) {
+            System.out.println("tile is " + world[x][y - 1].description());
+            if (world[x][y - 1].description().equals("flower")) {
+                player.flowers++;
+            }
+            world[x][y] = Tileset.FLOOR;
+            world[x][y - 1] = player.playerTile;
+            y -= 1;
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move down");
+        }
+    }
+    public static void moveNoDrawRight(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x + 1, y);
+        System.out.println("right world is " + world[x][y].description());
+        if (isClear(world, checkWallPosition)) {
+            System.out.println("tile is " + world[x + 1][y].description());
+            if (world[x + 1][y].description().equals("flower")) {
+                player.flowers++;
+            }
+            world[x][y] = Tileset.FLOOR;
+            world[x + 1][y] = player.playerTile;
+            x += 1;
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move right");
+        }
+    }
+
     private static boolean isClear(TETile[][] world, Position p) {
-        if ((world[p.x][p.y].equals(Tileset.WALL))) {
+        if ((world[p.x][p.y].description().equals("wall"))) {
             System.out.println("is wall");
             return false;
         }

@@ -1,5 +1,6 @@
 package byog.Core;
 
+import byog.SaveDemo.World;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
@@ -87,8 +88,56 @@ public class Game implements Serializable {
         PathGenerator.drawAllPaths(world, numRooms, rooms);
         MapGenerator.fillWalls(world);
         System.out.println(TETile.toString(world));
+
+        String moveStr = precessString(input);
+        moveNoDraw(world, moveStr);
+
         return world;
     }
+
+    private String precessString(String input) {
+        String moveStr = input;
+        if ((moveStr.charAt(0) == 'n')) {
+            moveStr = moveStr.substring(1);
+        } else if ((moveStr.charAt(0) == 'l')) {
+            OutputObject w = loadWorld();
+            Game.world = w.world;
+            Game.player1 = w.player1;
+            Game.player2 = w.player2;
+            moveStr = moveStr.substring(1);
+        } else if ((moveStr.charAt(0) == 'q')) {
+            saveGame(new OutputObject(Game.player1, Game.player2, world));
+        }
+        moveStr = moveStr.replaceAll("\\d", "");
+        return moveStr;
+    }
+
+    private void moveNoDraw(TETile[][] world, String str) {
+        for (int i = 0; i < str.length(); i += 1) {
+            char c = str.charAt(i);
+            if (c == 'w') {
+                player1.moveNoDraw(world, Direction.TOP);
+            } else if (c == 'a') {
+                player1.moveNoDraw(world, Direction.LEFT);
+            } else if (c == 's') {
+                player1.moveNoDraw(world, Direction.DOWN);
+            } else if (c == 'd') {
+                player1.moveNoDraw(world, Direction.RIGHT);
+            } else if (c == 'i') {
+                player2.moveNoDraw(world, Direction.TOP);
+            } else if (c == 'j') {
+                player2.moveNoDraw(world, Direction.LEFT);
+            } else if (c == 'k') {
+                player2.moveNoDraw(world, Direction.DOWN);
+            } else if (c == 'l') {
+                player2.moveNoDraw(world, Direction.RIGHT);
+            } else if (c == 'q') {
+                saveGame(new OutputObject(player1, player2, world));
+            }
+        }
+    }
+
+
 
     public static char waitCommand() {
         while (!StdDraw.hasNextKeyTyped()) {

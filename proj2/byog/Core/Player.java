@@ -49,10 +49,24 @@ public class Player implements Serializable {
         if (direction.equals(Direction.RIGHT)) {
             MapGenerator.moveRight(world, this);
             System.out.println("playerObj " + this.flowers);
+        }
+    }
 
+    public void moveNoDraw(TETile[][] world, Direction direction) {
+        if (direction.equals(Direction.TOP)) {
+            MapGenerator.moveNoDrawTop(world, this);
+        }
+        if (direction.equals(Direction.LEFT)) {
+            MapGenerator.moveNoDrawLeft(world, this);
 
         }
+        if (direction.equals(Direction.DOWN)) {
+            MapGenerator.moveNoDrawDown(world, this);
 
+        }
+        if (direction.equals(Direction.RIGHT)) {
+            MapGenerator.moveNoDrawRight(world, this);
+        }
     }
 
 
