@@ -87,7 +87,7 @@ public class Game implements Serializable {
         player2.placePlayerToWorld(world);
         PathGenerator.drawAllPaths(world, numRooms, rooms);
         MapGenerator.fillWalls(world);
-        System.out.println(TETile.toString(world));
+//        System.out.println(TETile.toString(world));
 
         String moveStr = precessString(input);
         moveNoDraw(world, moveStr);
