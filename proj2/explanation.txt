@@ -1,0 +1,9 @@
+my project2 solution
+
+my task on 25 Dec. 2018
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+to be tested by autograder
+

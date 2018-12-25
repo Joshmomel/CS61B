@@ -4,8 +4,9 @@ import byog.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class UI {
+public class UI implements Serializable {
     public static void drawMainMenu() {
         StdDraw.setCanvasSize(Data.WIDTH * 16, Data.HEIGHT * 16);
         StdDraw.setXscale(0, Data.WIDTH);
@@ -25,10 +26,6 @@ public class UI {
 
         StdDraw.show();
     }
-
-
-
-
 
     public static long askForSeed() {
         StdDraw.clear(StdDraw.PRINCETON_ORANGE);

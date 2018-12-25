@@ -3,7 +3,9 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-public class PathGenerator {
+import java.io.Serializable;
+
+public class PathGenerator implements Serializable {
     public static void drawPath(TETile[][] world, Room r1, Room r2) {
         Position p1 = PathGenerator.randomPoint(r1);
         Position p2 = PathGenerator.randomPoint(r2);

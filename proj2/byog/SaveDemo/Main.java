@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         StdDraw.enableDoubleBuffering();
 
-        /* If a World has been saved before, we first load it */
+        /* If a OutputObject has been saved before, we first load it */
         World w = loadWorld();
 
         while (true) {
@@ -66,7 +66,7 @@ public class Main {
             }
         }
 
-        /* In the case no World has been saved yet, we return a new one. */
+        /* In the case no OutputObject has been saved yet, we return a new one. */
         return new World();
     }
 

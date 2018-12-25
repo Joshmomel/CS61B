@@ -2,10 +2,13 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     public Position position;
     public TETile playerTile;
     public String playerName;
+    public int flowers = 0;
 
 
     public Player(Position p, TETile playerTile, String playerName) {

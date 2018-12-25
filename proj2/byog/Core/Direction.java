@@ -1,5 +1,7 @@
 package byog.Core;
 
-public enum Direction {
+import java.io.Serializable;
+
+public enum Direction implements Serializable {
         TOP, LEFT, DOWN, RIGHT;
 }

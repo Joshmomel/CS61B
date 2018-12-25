@@ -4,8 +4,10 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.io.Serializable;
 
-public class Room {
+
+public class Room implements Serializable {
     public int roomWidth;
     public int roomHeight;
     public int roomX;

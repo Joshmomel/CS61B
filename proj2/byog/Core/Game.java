@@ -5,14 +5,16 @@ import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
+import java.io.*;
 import java.util.Random;
 
-public class Game {
+public class Game implements Serializable {
     /* Feel free to change the width and height. */
     public static Random rand;
     public static Player player1;
     public static Player player2;
     public static TETile[][] world;
+    public static int flowersTotal = 0;
 
 
     /**
@@ -27,11 +29,24 @@ public class Game {
                 System.out.println(seed);
                 world = playWithInputString(Long.toString(seed));
                 WorldCreator.renderWorld(world);
+                MapGenerator.countFlowers(world);
+                play(world);
+            } else if (command == 'l') {
+                OutputObject o = loadWorld();
+                world = o.world;
+                player1 = o.player1;
+                player2 = o.player2;
+                System.out.println("player1 has " + player1.flowers);
+                System.out.println("player2 has " + player2.flowers);
+
+                WorldCreator.renderWorld(world);
+                MapGenerator.countFlowers(world);
                 play(world);
             }
             command = waitCommand();
         }
     }
+
 
     /**
      * Method used for autograding and testing the game code. The input string will be a series
@@ -66,7 +81,6 @@ public class Game {
     public static char waitCommand() {
         while (!StdDraw.hasNextKeyTyped()) {
             StdDraw.pause(10);
-//            mouseTile();
         }
         return StdDraw.nextKeyTyped();
     }
@@ -78,7 +92,6 @@ public class Game {
         }
         return StdDraw.nextKeyTyped();
     }
-
 
 
     public static void mouseTile() {
@@ -97,14 +110,25 @@ public class Game {
         StdDraw.filledRectangle(Data.WIDTH / 2, Data.HEIGHT - 1, Data.WIDTH / 2, 1);
         StdDraw.setPenColor(Color.PINK);
         StdDraw.textLeft(1, Data.HEIGHT - 1, tile.description());
+        StdDraw.textRight(Data.WIDTH - 1, Data.HEIGHT - 1,
+                "Flowers left: " + flowersTotal + "   Player 1: " + player1.flowers
+                        + "   Player 2: " + player2.flowers);
         StdDraw.show(10);
 
+    }
+
+    public static boolean isWin() {
+        if (player1.flowers + player2.flowers == flowersTotal) {
+            return true;
+        }
+        return false;
     }
 
     private void play(TETile[][] world) {
         while (true) {
             char k = waitForControlKey();
             if (k == 'q') {
+                saveGame(new OutputObject(player1, player2, world));
                 playWithKeyboard();
             }
             if (k == 'w') {
@@ -131,7 +155,83 @@ public class Game {
             }
             if (k == 'l') {
                 player2.move(world, Direction.RIGHT);
+            }
+            if (isWin()) {
+                endGame();
+            }
+        }
+    }
 
+    private void saveGame(OutputObject outputObject) {
+        File f = new File("./world.txt");
+
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+                FileOutputStream fs = new FileOutputStream(f);
+                ObjectOutputStream os = new ObjectOutputStream(fs);
+                os.writeObject(outputObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private OutputObject loadWorld() {
+        File f = new File("./world.txt");
+        if (f.exists()) {
+            try {
+                FileInputStream fs = new FileInputStream(f);
+                ObjectInputStream os = new ObjectInputStream(fs);
+                return (OutputObject) os.readObject();
+            } catch (FileNotFoundException e) {
+                System.out.println("file not found");
+                System.exit(0);
+            } catch (IOException e) {
+                System.out.println(e);
+                System.exit(0);
+            } catch (ClassNotFoundException e) {
+                System.out.println("class not found");
+                System.exit(0);
+            }
+        }
+        throw new RuntimeException("no file exists");
+    }
+
+    private void endGame() {
+        StdDraw.clear(StdDraw.PRINCETON_ORANGE);
+        StdDraw.setPenColor(Color.PINK);
+        StdDraw.setFont(new Font("Times New Roman", Font.BOLD, 60));
+        StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 + 10, "Final score:");
+        StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 + 5, "Player 1 - " + player1.flowers);
+        StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2, "Player 2 - " + player2.flowers);
+        if (player1.flowers > player2.flowers) {
+            StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 - 5, "Player 1 wins!");
+        } else if (player2.flowers > player1.flowers) {
+            StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 - 5, "Player 2 wins!");
+        } else {
+            StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 - 5, "It's a tie!");
+        }
+        StdDraw.show();
+        while (true) {
+            StdDraw.pause(100);
+            if (StdDraw.hasNextKeyTyped()) {
+                char k = StdDraw.nextKeyTyped();
+                if ((k == 'n') || (k == 'q')) {
+                    break;
+                }
+            }
+        }
+        StdDraw.clear(StdDraw.PRINCETON_ORANGE);
+        StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2 + 5, "Play again? ");
+        StdDraw.text(Data.WIDTH / 2, Data.HEIGHT / 2, "(Q)uit or (N)ew game?");
+        StdDraw.show();
+        char k = waitCommand();
+        while (true) {
+            if (k == 'q') {
+                System.exit(0);
+            } else if (k == 'n') {
+                playWithKeyboard();
             }
         }
     }

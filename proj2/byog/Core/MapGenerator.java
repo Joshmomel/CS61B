@@ -43,6 +43,17 @@ public class MapGenerator implements Serializable {
                 Position p = PathGenerator.randomPoint(rooms[i]);
                 world[p.x][p.y] = Tileset.FLOWER;
             }
+
+        }
+    }
+
+    public static void countFlowers(TETile[][] world) {
+        for (int i = 0; i < world.length; i++) {
+            for (int j = 0; j < world[i].length; j++) {
+                if (world[i][j] == Tileset.FLOWER) {
+                    Game.flowersTotal++;
+                }
+            }
         }
     }
 
@@ -52,6 +63,9 @@ public class MapGenerator implements Serializable {
         Position checkWallPosition = new Position(x, y + 1);
         if (isClear(world, checkWallPosition)) {
             world[x][y] = Tileset.FLOOR;
+            if (world[x][y + 1] == Tileset.FLOWER) {
+                player.flowers++;
+            }
             world[x][y + 1] = player.playerTile;
             world[x][y].draw(x, y);
             y += 1;
@@ -67,6 +81,9 @@ public class MapGenerator implements Serializable {
         int y = player.position.y;
         Position checkWallPosition = new Position(x- 1, y);
         if (isClear(world, checkWallPosition)) {
+            if (world[x - 1][y] == Tileset.FLOWER) {
+                player.flowers++;
+            }
             Game.world[x][y] = Tileset.FLOOR;
             Game.world[x - 1][y] = player.playerTile;
             Game.world[x][y].draw(x, y);
@@ -83,6 +100,9 @@ public class MapGenerator implements Serializable {
         int y = player.position.y;
         Position checkWallPosition = new Position(x, y - 1);
         if (isClear(world, checkWallPosition)) {
+            if (world[x][y - 1] == Tileset.FLOWER) {
+                player.flowers++;
+            }
             world[x][y] = Tileset.FLOOR;
             world[x][y - 1] = player.playerTile;
             world[x][y].draw(x, y);
@@ -99,6 +119,9 @@ public class MapGenerator implements Serializable {
         int y = player.position.y;
         Position checkWallPosition = new Position(x + 1, y);
         if (isClear(world, checkWallPosition)) {
+            if (world[x + 1][y] == Tileset.FLOWER) {
+                player.flowers++;
+            }
             world[x][y] = Tileset.FLOOR;
             world[x + 1][y] = player.playerTile;
             world[x][y].draw(x, y);

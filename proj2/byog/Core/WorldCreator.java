@@ -5,7 +5,9 @@ import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
-public class WorldCreator {
+import java.io.Serializable;
+
+public class WorldCreator implements Serializable {
     public static TETile[][] world;
 
     public static TETile[][] createEmptyWorld() {
