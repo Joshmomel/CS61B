@@ -3,10 +3,10 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.io.Serializable;
 
 
-public class MapGenerator {
-    public static TETile[][] world;
+public class MapGenerator implements Serializable {
 
 
     public static void generateRooms(TETile[][] world, int numRooms, Room[] rooms) {
@@ -35,6 +35,90 @@ public class MapGenerator {
             }
         }
     }
+
+    public static void generateFlowers(TETile[][] world, Room[] rooms) {
+        for (int i = 0; i < rooms.length; i++) {
+            int numbers = Game.rand.nextInt(rooms[i].roomWidth * rooms[i].roomHeight / 2);
+            for (int j = 0; j < numbers; j++) {
+                Position p = PathGenerator.randomPoint(rooms[i]);
+                world[p.x][p.y] = Tileset.FLOWER;
+            }
+        }
+    }
+
+    public static void moveTop(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x, y + 1);
+        if (isClear(world, checkWallPosition)) {
+            world[x][y] = Tileset.FLOOR;
+            world[x][y + 1] = player.playerTile;
+            world[x][y].draw(x, y);
+            y += 1;
+            world[x][y].draw(x, y);
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move top");
+        }
+    }
+
+    public static void moveLeft(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x- 1, y);
+        if (isClear(world, checkWallPosition)) {
+            Game.world[x][y] = Tileset.FLOOR;
+            Game.world[x - 1][y] = player.playerTile;
+            Game.world[x][y].draw(x, y);
+            x -= 1;
+            Game.world[x][y].draw(x, y);
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move left");
+        }
+    }
+
+    public static void moveDown(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x, y - 1);
+        if (isClear(world, checkWallPosition)) {
+            world[x][y] = Tileset.FLOOR;
+            world[x][y - 1] = player.playerTile;
+            world[x][y].draw(x, y);
+            y -= 1;
+            world[x][y].draw(x, y);
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move down");
+        }
+    }
+
+    public static void moveRight(TETile[][] world, Player player) {
+        int x = player.position.x;
+        int y = player.position.y;
+        Position checkWallPosition = new Position(x + 1, y);
+        if (isClear(world, checkWallPosition)) {
+            world[x][y] = Tileset.FLOOR;
+            world[x + 1][y] = player.playerTile;
+            world[x][y].draw(x, y);
+            x += 1;
+            world[x][y].draw(x, y);
+            player.position.x = x;
+            player.position.y = y;
+            System.out.println("move right");
+        }
+    }
+
+    private static boolean isClear(TETile[][] world, Position p) {
+        if ((world[p.x][p.y].equals(Tileset.WALL))) {
+            System.out.println("is wall");
+            return false;
+        }
+        return true;
+    }
+
+
 
 
 }

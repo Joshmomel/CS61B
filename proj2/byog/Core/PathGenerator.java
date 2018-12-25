@@ -18,7 +18,7 @@ public class PathGenerator {
         }
 
         if (!(deltaY == 0)) {
-            yIncrement = (p2.y - p1.y) / deltaY;;
+            yIncrement = (p2.y - p1.y) / deltaY;
         }
 
         int a = p1.x;
@@ -35,9 +35,9 @@ public class PathGenerator {
 
     }
 
-    private static Position randomPoint(Room r) {
-        return new Position(Game.rand.nextInt(r.roomWidth) + r.roomX,
-                Game.rand.nextInt(r.roomHeight) + r.roomY);
+    public static Position randomPoint(Room r) {
+        return new Position(Game.rand.nextInt(r.roomWidth - 2) + r.roomX + 1,
+                Game.rand.nextInt(r.roomHeight -2 ) + r.roomY + 1);
     }
 
     public static void drawAllPaths(TETile[][] world, int numRooms, Room[] rooms) {

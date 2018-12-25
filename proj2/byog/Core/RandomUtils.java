@@ -8,7 +8,7 @@ import java.util.Random;
  * and exponential). Also includes methods for shuffling an array and
  * other randomness related stuff you might want to do. Feel free to
  * modify this file.
- * <p>
+ * <position>
  * Adapted from https://introcs.cs.princeton.edu/java/22library/StdRandom.java.html
 *
  */
@@ -106,16 +106,16 @@ public class RandomUtils {
 
     /**
      * Returns a random boolean from a Bernoulli distribution with success
-     * probability <em>p</em>.
+     * probability <em>position</em>.
      *
      * @param p the probability of returning {@code true}
-     * @return {@code true} with probability {@code p} and
-     * {@code false} with probability {@code p}
-     * @throws IllegalArgumentException unless {@code 0} &le; {@code p} &le; {@code 1.0}
+     * @return {@code true} with probability {@code position} and
+     * {@code false} with probability {@code position}
+     * @throws IllegalArgumentException unless {@code 0} &le; {@code position} &le; {@code 1.0}
      */
     public static boolean bernoulli(Random random, double p) {
         if (!(p >= 0.0 && p <= 1.0)) {
-            throw new IllegalArgumentException("probability p must be between 0.0 and 1.0: " + p);
+            throw new IllegalArgumentException("probability position must be between 0.0 and 1.0: " + p);
         }
         return uniform(random) < p;
     }
@@ -166,17 +166,17 @@ public class RandomUtils {
 
     /**
      * Returns a random integer from a geometric distribution with success
-     * probability <em>p</em>.
+     * probability <em>position</em>.
      *
      * @param p the parameter of the geometric distribution
      * @return a random integer from a geometric distribution with success
-     * probability {@code p}; or {@code Integer.MAX_VALUE} if
-     * {@code p} is (nearly) equal to {@code 1.0}.
-     * @throws IllegalArgumentException unless {@code p >= 0.0} and {@code p <= 1.0}
+     * probability {@code position}; or {@code Integer.MAX_VALUE} if
+     * {@code position} is (nearly) equal to {@code 1.0}.
+     * @throws IllegalArgumentException unless {@code position >= 0.0} and {@code position <= 1.0}
      */
     public static int geometric(Random random, double p) {
         if (!(p >= 0.0 && p <= 1.0)) {
-            throw new IllegalArgumentException("probability p must be between 0.0 and 1.0: " + p);
+            throw new IllegalArgumentException("probability position must be between 0.0 and 1.0: " + p);
         }
         // using algorithm given by Knuth
         return (int) Math.ceil(Math.log(uniform(random)) / Math.log(1.0 - p));

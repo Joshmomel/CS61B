@@ -3,6 +3,7 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class WorldCreator {
     public static TETile[][] world;
@@ -21,6 +22,13 @@ public class WorldCreator {
         TERenderer ter = new TERenderer();
         ter.initialize(Data.WIDTH, Data.HEIGHT);
         ter.renderFrame(world);
+    }
+
+    public static void renderWorld(TETile[][] f) {
+        TERenderer ter = new TERenderer();
+        ter.initialize(Data.WIDTH, Data.HEIGHT);
+        ter.renderFrame(f);
+        StdDraw.show();
     }
 
 }
