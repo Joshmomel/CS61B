@@ -10,11 +10,20 @@ public class Player implements Serializable {
     public String playerName;
     public int flowers = 0;
 
+    public Player() {
+    }
 
     public Player(Position p, TETile playerTile, String playerName) {
         this.position = p;
         this.playerTile = playerTile;
         this.playerName = playerName;
+    }
+
+    public Player(Position p, TETile playerTile, String playerName, int flowers) {
+        this.position = p;
+        this.playerTile = playerTile;
+        this.playerName = playerName;
+        this.flowers = flowers;
     }
 
     public void placePlayerToWorld(TETile[][] world) {
@@ -25,15 +34,22 @@ public class Player implements Serializable {
     public void move(TETile[][] world, Direction direction) {
         if (direction.equals(Direction.TOP)) {
             MapGenerator.moveTop(world, this);
+            System.out.println("playerObj " + this.flowers);
         }
         if (direction.equals(Direction.LEFT)) {
             MapGenerator.moveLeft(world, this);
+            System.out.println("playerObj " + this.flowers);
+
         }
         if (direction.equals(Direction.DOWN)) {
             MapGenerator.moveDown(world, this);
+            System.out.println("playerObj " + this.flowers);
+
         }
         if (direction.equals(Direction.RIGHT)) {
             MapGenerator.moveRight(world, this);
+            System.out.println("playerObj " + this.flowers);
+
 
         }
 
