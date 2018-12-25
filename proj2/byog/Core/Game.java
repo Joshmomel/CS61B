@@ -18,7 +18,10 @@ public class Game implements Serializable {
 
 
     public static void setPlayer1(Player player1) {
-        Game.player1 = player1;
+        Game.player1.playerTile = player1.playerTile;
+        Game.player1.flowers = player1.flowers;
+        Game.player1.position = player1.position;
+        Game.player1.playerName = player1.playerName;
     }
 
 
