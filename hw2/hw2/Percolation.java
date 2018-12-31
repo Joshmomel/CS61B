@@ -12,6 +12,10 @@ public class Percolation {
     private int openSiteNum = 0;
 
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new IllegalArgumentException("Parameter cannot be a number <= 0");
+        }
+
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
         topWeightedQUF = new WeightedQuickUnionUF(N * N + 1);
         this.topForCheck = N * N;
@@ -23,7 +27,7 @@ public class Percolation {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = false;
                 if (i == 0) {
-                    weightedQuickUnionUF.union(xyTo1D(i, j), topForCheck);
+                    topWeightedQUF.union(xyTo1D(i, j), topForCheck);
                     weightedQuickUnionUF.union(xyTo1D(i, j), topParent);
                 }
                 if (i == grid.length - 1) {
@@ -34,7 +38,7 @@ public class Percolation {
     }
 
     private int xyTo1D(int row, int col) {
-        return (row * grid.length) + col + 1;
+        return (row * grid.length) + col;
     }
 
 
@@ -96,14 +100,18 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-        Percolation test = new Percolation(3);
+        Percolation test = new Percolation(5);
         test.open(0, 2);
         test.open(1, 2);
         test.open(2, 2);
-        test.open(2, 0);
-        System.out.println(test.percolates());
-        System.out.println(test.isFull(2, 0));
+        test.open(3, 2);
+        test.open(4, 2);
 
+        test.open(4, 0);
+        test.open(3, 0);
+        test.open(3, 1);
+        System.out.println(test.percolates());
+        System.out.println(test.isFull(4, 0));
     }
 
 
