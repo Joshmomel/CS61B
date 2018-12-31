@@ -89,9 +89,9 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         if (percolates()) {
-            return topWeightedQUF.connected(xyTo1D(row, col), topForCheck);
+            return topWeightedQUF.connected(xyTo1D(row, col), topForCheck) && isOpen(row, col);
         }
-        return weightedQuickUnionUF.connected(xyTo1D(row, col), topParent);
+        return weightedQuickUnionUF.connected(xyTo1D(row, col), topParent) && isOpen(row, col);
     }
 
     public int numberOfOpenSites() {
