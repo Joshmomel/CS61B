@@ -2,7 +2,7 @@ package hw2;
 import  edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
-public class PercolationStats implements PercolationStatesInterface{
+public class PercolationStats{
     private int T;
     private double[] stats;
 
@@ -28,23 +28,19 @@ public class PercolationStats implements PercolationStatesInterface{
         return (double) p.numberOfOpenSites() / (N * N);
     }
 
-    @Override
     public double mean() {
         return StdStats.mean(this.stats);
     }
 
-    @Override
     public double stddev() {
         return StdStats.stddev(this.stats);
     }
 
-    @Override
     public double confidenceLow() {
         double secondary = (1.96 * stddev()) / (Math.sqrt(T));
         return mean() - secondary;
     }
 
-    @Override
     public double confidenceHigh() {
         double secondary = (1.96 * stddev()) / (Math.sqrt(T));
         return mean() + secondary;
