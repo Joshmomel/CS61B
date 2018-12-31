@@ -35,7 +35,7 @@ public class PercolationStats implements PercolationStatesInterface{
 
     @Override
     public double stddev() {
-        return StdStats.stddev(this.stats)l;
+        return StdStats.stddev(this.stats);
     }
 
     @Override
