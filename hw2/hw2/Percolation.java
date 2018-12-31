@@ -26,13 +26,6 @@ public class Percolation {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = false;
-                if (i == 0) {
-                    topWeightedQUF.union(xyTo1D(i, j), topForCheck);
-                    weightedQuickUnionUF.union(xyTo1D(i, j), topParent);
-                }
-                if (i == grid.length - 1) {
-                    weightedQuickUnionUF.union(xyTo1D(i, j), bottomParent);
-                }
             }
         }
     }
@@ -59,6 +52,15 @@ public class Percolation {
         }
         Position thePosition = new Position(row, col);
         Direction direction = new Direction(thePosition);
+
+        if (row == 0) {
+            weightedQuickUnionUF.union(xyTo1D(row, col), topParent);
+            topWeightedQUF.union(xyTo1D(row, col), topForCheck);
+        }
+
+        if (row == grid.length - 1) {
+            weightedQuickUnionUF.union(xyTo1D(row, col), bottomParent);
+        }
 
         if (!(row == 0) && isOpen(direction.top.x, direction.top.y)) {
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(direction.top.x, direction.top.y));
@@ -100,18 +102,13 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-        Percolation test = new Percolation(5);
+        Percolation test = new Percolation(3);
         test.open(0, 2);
         test.open(1, 2);
         test.open(2, 2);
-        test.open(3, 2);
-        test.open(4, 2);
-
-        test.open(4, 0);
-        test.open(3, 0);
-        test.open(3, 1);
+        test.open(2, 0);
         System.out.println(test.percolates());
-        System.out.println(test.isFull(4, 0));
+        System.out.println(test.isFull(2, 0));
     }
 
 
