@@ -36,10 +36,7 @@ public class Percolation {
 
 
     private boolean isValid(int row, int col) {
-        if (row < 0 || col < 0) {
-            throw new IllegalArgumentException("not valid");
-        }
-        if (row > grid.length - 1 || col > grid.length - 1) {
+        if (row < 0 || col < 0 || row > grid.length - 1 || col > grid.length - 1) {
             throw new IndexOutOfBoundsException("not valid");
         }
         return true;
@@ -52,7 +49,7 @@ public class Percolation {
         if (row > grid.length - 1 || col > grid.length - 1) {
             throw new IndexOutOfBoundsException("not valid");
         }
-        
+
         if (isValid(row, col)) {
             if (grid[row][col]) {
                 return;
