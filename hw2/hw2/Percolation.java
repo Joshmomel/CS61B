@@ -3,14 +3,18 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation implements PercolationInterface {
-    public boolean[][] grid;
-    public int topParent;
-    public int bottomParent;
-    public WeightedQuickUnionUF weightedQuickUnionUF;
-    public int openSiteNum = 0;
+    private boolean[][] grid;
+    private int topParent;
+    private int bottomParent;
+    private int topForCheck;
+    private WeightedQuickUnionUF weightedQuickUnionUF;
+    private WeightedQuickUnionUF topWeightedQUF;
+    private int openSiteNum = 0;
 
     public Percolation(int N) {
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
+        topWeightedQUF = new WeightedQuickUnionUF(N * N + 1);
+        this.topForCheck = N * N;
         this.topParent = N * N;
         this.bottomParent = N * N + 1;
 
@@ -19,10 +23,12 @@ public class Percolation implements PercolationInterface {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = false;
             }
-            System.out.println("bottomParent xyTo1D(i, 0) :: " + xyTo1D(i, 0));
-            System.out.println("topParent xyTo1D(i, N - 1) ::" + xyTo1D(i, N - 1));
+//            System.out.println("bottomParent xyTo1D(i, 0) :: " + xyTo1D(i, 0));
+//            System.out.println("topParent xyTo1D(i, N - 1) ::" + xyTo1D(i, N - 1));
+            System.out.println("topForCheck xyTo1D(i, N - 1) ::" + xyTo1D(i, N - 1));
             weightedQuickUnionUF.union(xyTo1D(i, 0), bottomParent);
             weightedQuickUnionUF.union(xyTo1D(i, N - 1), topParent);
+            topWeightedQUF.union(xyTo1D(i, N - 1), topForCheck);
         }
     }
 
@@ -63,15 +69,19 @@ public class Percolation implements PercolationInterface {
 
         if (!(col == 4) && isOpen(direction.top.x, direction.top.y)){
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(direction.top.x, direction.top.y));
+            topWeightedQUF.union(xyTo1D(row, col), xyTo1D(direction.top.x, direction.top.y));
         }
         if (!(col == 0) && isOpen(direction.bottom.x, direction.bottom.y)){
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(direction.bottom.x, direction.bottom.y));
+            topWeightedQUF.union(xyTo1D(row, col), xyTo1D(direction.bottom.x, direction.bottom.y));
         }
         if (!(row == 0) && isOpen(direction.left.x, direction.left.y)){
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(direction.left.x, direction.left.y));
+            topWeightedQUF.union(xyTo1D(row, col), xyTo1D(direction.left.x, direction.left.y));
         }
         if (!(row == 4) && isOpen(direction.right.x, direction.right.y)){
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(direction.right.x, direction.right.y));
+            topWeightedQUF.union(xyTo1D(row, col), xyTo1D(direction.right.x, direction.right.y));
         }
 
     }
@@ -85,7 +95,7 @@ public class Percolation implements PercolationInterface {
     @Override
     public boolean isFull(int row, int col) {
         if (percolates()) {
-
+            return topWeightedQUF.connected(xyTo1D(row, col), topForCheck);
         }
         return weightedQuickUnionUF.connected(xyTo1D(row, col), topParent);
     }
@@ -119,26 +129,23 @@ public class Percolation implements PercolationInterface {
         System.out.println("2: " +percolation.oneDtoXY(2)[0] + " , " + percolation.oneDtoXY(2)[1]);
         percolation.open(percolation.oneDtoXY(7)[0], percolation.oneDtoXY(7)[1]);
         System.out.println("7: " +percolation.oneDtoXY(7)[0] + " , " + percolation.oneDtoXY(7)[1]);
-        System.out.println("isOpen(4 ,0): " + percolation.isOpen(4 ,0));
-//        System.out.println("24: " +percolation.oneDtoXY(24)[0] + " , " + percolation.oneDtoXY(24)[1]);
+//        System.out.println("isOpen(4 ,0): " + percolation.isOpen(4 ,0));
+        System.out.println("24: " +percolation.oneDtoXY(24)[0] + " , " + percolation.oneDtoXY(24)[1]);
 
 
-        System.out.println("isFull(4, 0): " + percolation.xyTo1D(4,0) + " : "  + percolation.isFull(4, 0));
+//        System.out.println("isFull(4, 0): " + percolation.xyTo1D(4,0) + " : "  + percolation.isFull(4, 0));
         System.out.println(percolation.percolates());
         percolation.open(4, 0);
         System.out.println(percolation.percolates());
         System.out.println("-------------------------");
+
         percolation.open(percolation.oneDtoXY(16)[0], percolation.oneDtoXY(16)[1]);
         percolation.open(percolation.oneDtoXY(21)[0], percolation.oneDtoXY(21)[1]);
         percolation.open(percolation.oneDtoXY(22)[0], percolation.oneDtoXY(22)[1]);
         percolation.open(percolation.oneDtoXY(20)[0], percolation.oneDtoXY(20)[1]);
 
-        System.out.println("connect 16 : " + percolation.weightedQuickUnionUF.connected(16, 21));
-        System.out.println(percolation.weightedQuickUnionUF.find(24));
-        System.out.println(percolation.weightedQuickUnionUF.find(16));
-
-
-
+//        System.out.println("connect 16 : " + percolation.weightedQuickUnionUF.connected(16, 21));
+        System.out.println(percolation.isFull(percolation.oneDtoXY(21)[0], percolation.oneDtoXY(21)[1]));
 
 
     }
