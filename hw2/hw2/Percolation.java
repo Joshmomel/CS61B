@@ -33,7 +33,7 @@ public class Percolation {
         return row + (grid.length - col - 1) * grid.length;
     }
 
-    public int[] oneDtoXY(int num) {
+    private int[] oneDtoXY(int num) {
         int total = grid.length * grid.length;
         int[] xy = new int[2];
         if (num < 0 || num > total) {
