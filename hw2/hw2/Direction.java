@@ -9,10 +9,10 @@ public class Direction {
 
     public Direction(Position theNum) {
         this.theNum = theNum;
-        this.top = new Position(theNum.x, theNum.y + 1);
-        this.bottom = new Position(theNum.x, theNum.y -1);
-        this.left = new Position(theNum.x - 1, theNum.y);
-        this.right = new Position(theNum.x + 1,theNum.y);
+        this.top = new Position(theNum.x - 1, theNum.y);
+        this.bottom = new Position(theNum.x + 1, theNum.y);
+        this.left = new Position(theNum.x, theNum.y - 1);
+        this.right = new Position(theNum.x, theNum.y + 1);
     }
 
 
