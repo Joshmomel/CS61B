@@ -46,6 +46,13 @@ public class Percolation {
     }
 
     public void open(int row, int col) {
+        if (row < 0 || col < 0) {
+            throw new IllegalArgumentException("not valid");
+        }
+        if (row > grid.length - 1 || col > grid.length - 1) {
+            throw new IndexOutOfBoundsException("not valid");
+        }
+        
         if (isValid(row, col)) {
             if (grid[row][col]) {
                 return;
