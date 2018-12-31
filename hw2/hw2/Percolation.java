@@ -85,7 +85,10 @@ public class Percolation {
     }
 
     public boolean isOpen(int row, int col) {
-        return grid[row][col];
+        if(isValid(row, col)) {
+            return grid[row][col];
+        }
+        throw new IndexOutOfBoundsException("is not valid");
     }
 
 
@@ -111,6 +114,12 @@ public class Percolation {
         test.open(1, 2);
         test.open(2, 2);
         test.open(2, 0);
+        test.open(2, 0);
+        test.open(2, 0);
+        test.open(2, 0);
+
+//        System.out.println(test.isOpen(-1, 3));
+        System.out.println(test.openSiteNum);
         System.out.println(test.percolates());
         System.out.println(test.isFull(2, 0));
     }
