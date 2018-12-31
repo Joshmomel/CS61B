@@ -1,12 +1,13 @@
 package hw2;
-import  edu.princeton.cs.introcs.StdRandom;
+
+import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
-public class PercolationStats{
+public class PercolationStats {
     private int T;
     private double[] stats;
 
-    public PercolationStats(int N, int T, PercolationFactory pf){
+    public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException("Cannot use these parameters");
         }

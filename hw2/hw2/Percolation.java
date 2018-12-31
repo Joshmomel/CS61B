@@ -86,7 +86,7 @@ public class Percolation {
     }
 
     public boolean isOpen(int row, int col) {
-        if(isValid(row, col)) {
+        if (isValid(row, col)) {
             return grid[row][col];
         }
         throw new IndexOutOfBoundsException("is not valid");
