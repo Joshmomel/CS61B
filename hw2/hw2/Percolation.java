@@ -3,6 +3,7 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
+    private int N;
     private boolean[][] grid;
     private int topParent;
     private int bottomParent;
@@ -10,12 +11,11 @@ public class Percolation {
     private WeightedQuickUnionUF weightedQuickUnionUF;
     private WeightedQuickUnionUF topWeightedQUF;
     private int openSiteNum = 0;
-
     public Percolation(int N) {
         if (N <= 0) {
             throw new IllegalArgumentException("Parameter cannot be a number <= 0");
         }
-
+        this.N = N;
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
         topWeightedQUF = new WeightedQuickUnionUF(N * N + 1);
         this.topForCheck = N * N;
@@ -35,21 +35,15 @@ public class Percolation {
     }
 
 
-    private boolean isValid(int row, int col) {
-        if (row < 0 || col < 0) {
-            throw new IllegalArgumentException();
-        }
-        if (row > grid.length - 1 || col > grid.length - 1) {
-            throw new IndexOutOfBoundsException();
-        }
-        return true;
-    }
-
     public void open(int row, int col) {
-        if (isValid(row, col)) {
-            grid[row][col] = true;
-            openSiteNum += 1;
+        if (row < 0 || row > grid.length - 1 || col < 0 || col > grid.length - 1) {
+            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
+        } else if (grid[row][col]) {
+            return;
         }
+
+        grid[row][col] = true;
+
         Position thePosition = new Position(row, col);
         Direction direction = new Direction(thePosition);
 
@@ -82,11 +76,17 @@ public class Percolation {
     }
 
     public boolean isOpen(int row, int col) {
+        if (row < 0 || row > (N - 1) || col < 0 || col > (N - 1)) {
+            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
+        }
         return grid[row][col];
     }
 
 
     public boolean isFull(int row, int col) {
+        if (row < 0 || row > (N - 1) || col < 0 || col > (N - 1)) {
+            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
+        }
         if (percolates()) {
             return topWeightedQUF.connected(xyTo1D(row, col), topForCheck) && isOpen(row, col);
         }
