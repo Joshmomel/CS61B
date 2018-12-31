@@ -3,7 +3,6 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private int N;
     private boolean[][] grid;
     private int topParent;
     private int bottomParent;
@@ -11,11 +10,12 @@ public class Percolation {
     private WeightedQuickUnionUF weightedQuickUnionUF;
     private WeightedQuickUnionUF topWeightedQUF;
     private int openSiteNum = 0;
+
     public Percolation(int N) {
         if (N <= 0) {
             throw new IllegalArgumentException("Parameter cannot be a number <= 0");
         }
-        this.N = N;
+
         weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
         topWeightedQUF = new WeightedQuickUnionUF(N * N + 1);
         this.topForCheck = N * N;
@@ -35,15 +35,24 @@ public class Percolation {
     }
 
 
-    public void open(int row, int col) {
-        if (row < 0 || row > grid.length - 1 || col < 0 || col > grid.length - 1) {
-            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
-        } else if (grid[row][col]) {
-            return;
+    private boolean isValid(int row, int col) {
+        if (row < 0 || col < 0) {
+            throw new IllegalArgumentException("not valid");
         }
+        if (row > grid.length - 1 || col > grid.length - 1) {
+            throw new IndexOutOfBoundsException("not valid");
+        }
+        return true;
+    }
 
-        grid[row][col] = true;
-
+    public void open(int row, int col) {
+        if (isValid(row, col)) {
+            if (grid[row][col]) {
+                return;
+            }
+            grid[row][col] = true;
+            openSiteNum += 1;
+        }
         Position thePosition = new Position(row, col);
         Direction direction = new Direction(thePosition);
 
@@ -76,17 +85,11 @@ public class Percolation {
     }
 
     public boolean isOpen(int row, int col) {
-        if (row < 0 || row > (N - 1) || col < 0 || col > (N - 1)) {
-            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
-        }
         return grid[row][col];
     }
 
 
     public boolean isFull(int row, int col) {
-        if (row < 0 || row > (N - 1) || col < 0 || col > (N - 1)) {
-            throw new IndexOutOfBoundsException("Cannot use these values for row and column");
-        }
         if (percolates()) {
             return topWeightedQUF.connected(xyTo1D(row, col), topForCheck) && isOpen(row, col);
         }
@@ -103,6 +106,7 @@ public class Percolation {
 
     public static void main(String[] args) {
         Percolation test = new Percolation(3);
+//        test.open(-1, 2);
         test.open(0, 2);
         test.open(1, 2);
         test.open(2, 2);
