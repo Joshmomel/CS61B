@@ -1,0 +1,9 @@
+my lab9 solution
+
+my task on 1 Jan 2019
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+to be test by autograder
+
