@@ -1,5 +1,7 @@
 package hw3.hash;
+
 import java.awt.Color;
+
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -30,6 +32,7 @@ public class SimpleOomage implements Oomage {
     @Override
     public int hashCode() {
         if (!USE_PERFECT_HASH) {
+            System.out.println("first is " + red + green + blue);
             return red + green + blue;
         } else {
             return (red / 5) * 10000 + (blue / 5) + (green / 5) * 100;

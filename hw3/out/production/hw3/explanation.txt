@@ -4,4 +4,4 @@ my tast on 26 Nov. 2018
 
 Update the read file such that it can read all documents.
 
-not done the last part of finding bugs in hush function.
+not really understand how to do the test 

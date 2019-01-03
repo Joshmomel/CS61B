@@ -26,16 +26,17 @@ public class TestSimpleOomage {
     public void testHashCodePerfect() {
         HashSet<SimpleOomage> hashSet = new HashSet<>();
         SimpleOomage ooA = new SimpleOomage(5, 5, 5);
-        SimpleOomage ooZ = new SimpleOomage(25, 25, 25);
-
-
+        hashSet.add(ooA);
         int count = 0;
-        System.out.println((ooZ.hashCode() & 0x7FFFFFFF) / 100);
         for (int i = 1; i < 52; i++) {
             for (int j = 1; j < 52; j++) {
                 for (int k = 1; k < 52; k++) {
                     SimpleOomage simpleOomage = new SimpleOomage(i * 5, j * 5, k * 5);
-                    count += 1;
+                    if (i != 5 && j!=5 && k != 5) {
+                        boolean contains = hashSet.contains(simpleOomage);
+//                        System.out.println(contains);
+//                        assertFalse(contains);
+                    }
                 }
             }
         }
@@ -64,7 +65,7 @@ public class TestSimpleOomage {
     }
 
     /* TODO: Uncomment this test after you finish haveNiceHashCode Spread in OomageTestUtility */
-    /*@Test
+    @Test
     public void testRandomOomagesHashCodeSpread() {
         List<Oomage> oomages = new ArrayList<>();
         int N = 10000;
@@ -74,9 +75,11 @@ public class TestSimpleOomage {
         }
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
-    }*/
+    }
 
-    /** Calls tests for SimpleOomage. */
+    /**
+     * Calls tests for SimpleOomage.
+     */
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestSimpleOomage.class);
     }
