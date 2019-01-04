@@ -4,4 +4,4 @@ my tast on 04 Jan 2019
 
 Update the read file such that it can read all documents.
 
-first submit to autograder
+submit to autograder
