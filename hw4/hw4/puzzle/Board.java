@@ -99,6 +99,10 @@ public class Board implements WorldState {
         return s.toString();
     }
 
+    public int hashCode() {
+        return 1;
+    }
+
     @Override
     public int estimatedDistanceToGoal() {
         return manhattan();
