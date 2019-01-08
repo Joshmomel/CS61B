@@ -1,7 +1,7 @@
-my lab11 solution 
+my hw4 solution 
 
 my tast on 06 Jan 2019
 
 Update the read file such that it can read all documents.
 
-finish up to the breadFristSearch
+autograder pass version.
