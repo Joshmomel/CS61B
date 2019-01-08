@@ -1,6 +1,6 @@
 my lab11 solution 
 
-my tast on 06 Jan 2019
+my tast on 08 Jan 2019
 
 Update the read file such that it can read all documents.
 
