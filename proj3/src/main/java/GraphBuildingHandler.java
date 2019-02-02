@@ -38,6 +38,8 @@ public class GraphBuildingHandler extends DefaultHandler {
                     "secondary_link", "tertiary_link"));
     private String activeState = "";
     private final GraphDB g;
+    private Way way = null;
+    private boolean flag = false;
 
     /**
      * Create a new GraphBuildingHandler.
@@ -74,14 +76,22 @@ public class GraphBuildingHandler extends DefaultHandler {
 
             /* TODO Use the above information to save a "node" to somewhere. */
             /* Hint: A graph-like structure would be nice. */
+            long id = Long.parseLong(attributes.getValue("id"));
+            double lat = Double.parseDouble(attributes.getValue("lat"));
+            double lon = Double.parseDouble(attributes.getValue("lon"));
+            Node toStore = new Node(id, lat, lon);
+            g.addNode(toStore);
 
         } else if (qName.equals("way")) {
             /* We encountered a new <way...> tag. */
             activeState = "way";
 //            System.out.println("Beginning a way...");
+            way = new Way(Long.parseLong(attributes.getValue("id")));
+
+
         } else if (activeState.equals("way") && qName.equals("nd")) {
             /* While looking at a way, we found a <nd...> tag. */
-            //System.out.println("Id of a node in this way: " + attributes.getValue("ref"));
+//            System.out.println("Id of a node in this way: " + attributes.getValue("ref"));
 
             /* TODO Use the above id to make "possible" connections between the nodes in this way */
             /* Hint1: It would be useful to remember what was the last node in this way. */
@@ -89,6 +99,8 @@ public class GraphBuildingHandler extends DefaultHandler {
             cumbersome since you might have to remove the connections if you later see a tag that
             makes this way invalid. Instead, think of keeping a list of possible connections and
             remember whether this way is valid or not. */
+            long id = Long.parseLong(attributes.getValue("ref"));
+            way.addNode(id);
 
         } else if (activeState.equals("way") && qName.equals("tag")) {
             /* While looking at a way, we found a <tag...> tag. */
@@ -97,10 +109,14 @@ public class GraphBuildingHandler extends DefaultHandler {
             if (k.equals("maxspeed")) {
                 //System.out.println("Max Speed: " + v);
                 /* TODO set the max speed of the "current way" here. */
+                way.setMaxSpeed(v);
             } else if (k.equals("highway")) {
                 //System.out.println("Highway type: " + v);
                 /* TODO Figure out whether this way and its connections are valid. */
                 /* Hint: Setting a "flag" is good enough! */
+                if (ALLOWED_HIGHWAY_TYPES.contains(v)) {
+                    this.flag = true;
+                }
             } else if (k.equals("name")) {
                 //System.out.println("Way Name: " + v);
             }
@@ -130,11 +146,18 @@ public class GraphBuildingHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equals("way")) {
+            if (flag) {
+                g.addConnection(way);
+            }
+
+            way = null;
+            flag = false;
             /* We are done looking at a way. (We finished looking at the nodes, speeds, etc...)*/
             /* Hint1: If you have stored the possible connections for this way, here's your
             chance to actually connect the nodes together if the way is valid. */
 //            System.out.println("Finishing a way...");
         }
+
     }
 
 }

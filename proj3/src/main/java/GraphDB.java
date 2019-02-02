@@ -7,6 +7,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Graph for storing all of the intersection (vertex) and road (edge) information.
@@ -26,8 +29,14 @@ public class GraphDB {
      * You do not need to modify this constructor, but you're welcome to do so.
      * @param dbPath Path to the XML file to be parsed.
      */
+
+    private Map<Long, Node> berkeleyMap;
+
+
+
     public GraphDB(String dbPath) {
         try {
+            berkeleyMap = new HashMap<>();
             File inputFile = new File(dbPath);
             FileInputStream inputStream = new FileInputStream(inputFile);
             // GZIPInputStream stream = new GZIPInputStream(inputStream);
@@ -57,7 +66,13 @@ public class GraphDB {
      *  we can reasonably assume this since typically roads are connected.
      */
     private void clean() {
-        // TODO: Your code here.
+        Object[] nodes = berkeleyMap.keySet().toArray();
+        for (int i = 0; i < nodes.length; i++) {
+            Node curr = berkeleyMap.get(nodes[i]);
+            if (curr.getConnections().size() == 0) {
+                berkeleyMap.remove(curr.getId());
+            }
+        }
     }
 
     /**
@@ -66,7 +81,7 @@ public class GraphDB {
      */
     Iterable<Long> vertices() {
         //YOUR CODE HERE, this currently returns only an empty list.
-        return new ArrayList<Long>();
+        return berkeleyMap.keySet();
     }
 
     /**
@@ -75,7 +90,7 @@ public class GraphDB {
      * @return An iterable of the ids of the neighbors of v.
      */
     Iterable<Long> adjacent(long v) {
-        return null;
+        return berkeleyMap.get(v).getConnections();
     }
 
     /**
@@ -136,7 +151,18 @@ public class GraphDB {
      * @return The id of the node in the graph closest to the target.
      */
     long closest(double lon, double lat) {
-        return 0;
+        Object[] nodes = berkeleyMap.keySet().toArray();
+        double minDistance = Double.MAX_VALUE;
+        long minId = 0;
+        for (int i = 0; i < nodes.length; i++) {
+            Node curr = berkeleyMap.get(nodes[i]);
+            double currDistance = distance(lon, lat, curr.getLon(), curr.getLat());
+            if (currDistance <= minDistance) {
+                minDistance = currDistance;
+                minId = curr.getId();
+            }
+        }
+        return minId;
     }
 
     /**
@@ -145,7 +171,7 @@ public class GraphDB {
      * @return The longitude of the vertex.
      */
     double lon(long v) {
-        return 0;
+        return berkeleyMap.get(v).getLon();
     }
 
     /**
@@ -154,6 +180,33 @@ public class GraphDB {
      * @return The latitude of the vertex.
      */
     double lat(long v) {
-        return 0;
+        return berkeleyMap.get(v).getLat();
+    }
+
+    public void addNode(Node n) {
+        berkeleyMap.put(n.getId(), n);
+    }
+
+
+    public void addConnection(Way way) {
+        List<Long> nodes = way.getNodes();
+        if (nodes.size() == 2) {
+            Node first = berkeleyMap.get(nodes.get(0));
+            Node second = berkeleyMap.get(nodes.get(1));
+
+
+            first.addConnection(second.getId());
+            second.addConnection(first.getId());
+        } else {
+            for (int i = 1; i < nodes.size() - 1; i++) {
+                Node curr = berkeleyMap.get(nodes.get(i));
+                Node prev = berkeleyMap.get(nodes.get(i - 1));
+                Node next = berkeleyMap.get(nodes.get(i + 1));
+                curr.addConnection(prev.getId());
+                curr.addConnection(next.getId());
+                prev.addConnection(curr.getId());
+                next.addConnection(curr.getId());
+            }
+        }
     }
 }

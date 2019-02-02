@@ -52,24 +52,26 @@ public class Rasterer {
         Double queryUllat = params.get("ullat");
         Double queryLrlat = params.get("lrlat");
         Double queryWidth = params.get("w");
-        System.out.println(params);
+//        System.out.println(params);
+
+        boolean check = checkParams(queryLrlon, queryUllon, queryUllat, queryLrlat);
 
         double LonDPP = calculateLonDDP(queryLrlon, queryUllon, queryWidth);
-        System.out.println(LonDPP);
+//        System.out.println(LonDPP);
         int depth = calculateDepth(LonDPP);
 
         double[] longitude = getLongitude(depth, queryUllon, queryLrlon);
-        System.out.println("longitude are " + longitude[0] + ", " + longitude[1] + " and " + longitude[2] + " , " + longitude[3]);
+//        System.out.println("longitude are " + longitude[0] + ", " + longitude[1] + " and " + longitude[2] + " , " + longitude[3]);
 
         double[] latitude = getLatitude(depth, queryLrlat, queryUllat);
-        System.out.println("latitude are " + latitude[0] + ", " + latitude[1] + " and " + latitude[2] + " , " + latitude[3]);
+//        System.out.println("latitude are " + latitude[0] + ", " + latitude[1] + " and " + latitude[2] + " , " + latitude[3]);
 
         String[][] renderGrid = renderGrid(depth, (int) longitude[1], (int) longitude[3], (int) latitude[1], (int) latitude[3]);
-        for (String[] strings : renderGrid) {
-            for (String string : strings) {
-                System.out.println(string);
-            }
-        }
+//        for (String[] strings : renderGrid) {
+//            for (String string : strings) {
+//                System.out.println(string);
+//            }
+//        }
 
         Map<String, Object> results = new HashMap<>();
 
@@ -77,9 +79,9 @@ public class Rasterer {
         results.put("raster_ul_lon", longitude[0]);
         results.put("raster_ul_lat", latitude[0]);
         results.put("raster_lr_lon", longitude[2]);
-        results.put("raster_lr_lat", latitude[1]);
+        results.put("raster_lr_lat", latitude[2]);
         results.put("depth", depth);
-        results.put("query_success", true);
+        results.put("query_success", check);
         results.put("render_grid", renderGrid);
 
 
@@ -88,16 +90,16 @@ public class Rasterer {
 
     private double calculateLonDDP(double lrlon, double ullon, double width) {
         double diff = lrlon - ullon;
-        System.out.println("system diff is " + (MapServer.ROOT_LRLON - MapServer.ROOT_ULLON));
-        System.out.println("x0 per pixel " + startPixel);
-        System.out.println("diff is " + diff);
-        System.out.println("width is " + width);
-        System.out.println("initial pdd is " + diff * Sl);
-        System.out.println("after scaling is " + diff * Sl / width);
+//        System.out.println("system diff is " + (MapServer.ROOT_LRLON - MapServer.ROOT_ULLON));
+//        System.out.println("x0 per pixel " + startPixel);
+//        System.out.println("diff is " + diff);
+//        System.out.println("width is " + width);
+//        System.out.println("initial pdd is " + diff * Sl);
+//        System.out.println("after scaling is " + diff * Sl / width);
         double LonDpp = diff / width;
-        System.out.println("Approx LonDpp is " + LonDpp);
+//        System.out.println("Approx LonDpp is " + LonDpp);
         double feetPerPixel = LonDpp * Sl;
-        System.out.println("depth is " + calculateDepth(feetPerPixel));
+//        System.out.println("depth is " + calculateDepth(feetPerPixel));
         return feetPerPixel;
     }
 
@@ -105,6 +107,9 @@ public class Rasterer {
         int count = 1;
         double initPixel = startPixel / 2;
         for (int i = 0; i < 8; i++) {
+            if (count == 7){
+                return count;
+            }
             if (feetPerpixel > initPixel) {
                 return count;
             }
@@ -116,8 +121,6 @@ public class Rasterer {
 
     private double[] getLatitude(int depth, double requireMinLat, double requireMaxLat) {
         double differenceInDepth = latDifference / Math.pow(2, depth);
-//        System.out.println("min is " + requireMinLat);
-//        System.out.println("max is " + requireMaxLat);
         int countMin = 0;
         double[] results = new double[4];
         double lat = MapServer.ROOT_ULLAT;
@@ -196,6 +199,15 @@ public class Rasterer {
             }
         }
         return results;
+    }
+
+    private boolean checkParams(double queryLrlon, double queryUllon, double queryUllat, double queryLrlat) {
+        if (queryUllon > MapServer.ROOT_LRLON || queryLrlon < MapServer.ROOT_ULLON
+                || queryUllat < MapServer.ROOT_LRLAT || queryLrlat > MapServer.ROOT_ULLAT
+                ) {
+            return false;
+        }
+        return true;
     }
 
 }
