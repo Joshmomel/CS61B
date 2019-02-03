@@ -6,6 +6,15 @@ public class Node {
     private double lat;
     private double lon;
     private List connections;
+    private Double priority = Double.MAX_VALUE;
+
+    public double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority = priority;
+    }
 
     public Node(long id, double lat, double lon) {
         this.id = id;

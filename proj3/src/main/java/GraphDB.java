@@ -187,6 +187,10 @@ public class GraphDB {
         berkeleyMap.put(n.getId(), n);
     }
 
+    public Node getNode(Long id) {
+        return berkeleyMap.get(id);
+    }
+
 
     public void addConnection(Way way) {
         List<Long> nodes = way.getNodes();

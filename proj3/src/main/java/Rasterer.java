@@ -153,7 +153,7 @@ public class Rasterer {
 
     private double[] getLongitude(int depth, double requireMinLon, double requireMaxLon) {
         double differenceInDepth = difference / Math.pow(2, depth);
-        System.out.println("function getLongitude diff is " + differenceInDepth);
+//        System.out.println("function getLongitude diff is " + differenceInDepth);
         int countMin = 0;
         double[] results = new double[4];
         double lon = MapServer.ROOT_ULLON;
