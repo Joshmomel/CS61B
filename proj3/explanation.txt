@@ -1,0 +1,8 @@
+my project3 solution
+
+my task on 03 Feb. 2019
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+To be test by the autograder
