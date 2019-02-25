@@ -71,43 +71,35 @@ public class CountingSort {
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int i : arr) {
-            max = max > i ? max : i;
-        }
-        for (int i : arr) {
-            min = min < i ? min : i;
+            if (i > max) {
+                max = i;
+            }
+
+            if (i < min) {
+                min = i;
+            }
         }
 
         //create a storing list that counts the numbers of occurrence
-        int[] counts = new int[Math.abs(min) + 1 + Math.abs(max)];
+        int[] count = new int[max - min + 1];
         for (int i : arr) {
-            if (i >= 0) {
-                counts[Math.abs(min) + i] += 1;
-            }
-            if (i < 0) {
-                counts[Math.abs(min) - Math.abs(i)] += 1;
-            }
+            count[i - min]++;
         }
+
 
         int[] starts = new int[Math.abs(min) + 1 + Math.abs(max)];
         int position = 0;
         for (int i = 0; i < starts.length; i++) {
             starts[i] = position;
-            position += counts[i];
+            position += count[i];
         }
 
         int[] sorted = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i += 1) {
             int item = arr[i];
-            if (item >= 0) {
-                int place = starts[Math.abs(min) + item];
-                sorted[place] = item;
-                starts[item] += 1;
-            }
-            if (item < 0) {
-                int place = starts[Math.abs(min) - Math.abs(item)];
-                sorted[place] = item;
-                starts[Math.abs(min) - Math.abs(item)] += 1;
-            }
+            int place = starts[item - min];
+            sorted[place] = item;
+            starts[item - min] += 1;
         }
 
 
