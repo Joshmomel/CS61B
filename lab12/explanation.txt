@@ -1,9 +1,9 @@
-my lab12 solution
+my project3 solution
 
-my task on 25 Feb. 2019
+my task on 03 Feb. 2019
 
 Update the read file such that it can read all documents.
 Finsh all the taks.
 
-autograder to be tested the merge sort
+autograder pass version
 

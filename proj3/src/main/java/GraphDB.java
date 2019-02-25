@@ -197,8 +197,6 @@ public class GraphDB {
         if (nodes.size() == 2) {
             Node first = berkeleyMap.get(nodes.get(0));
             Node second = berkeleyMap.get(nodes.get(1));
-
-
             first.addConnection(second.getId());
             second.addConnection(first.getId());
         } else {
