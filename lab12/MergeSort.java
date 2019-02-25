@@ -96,13 +96,14 @@ public class MergeSort {
             return results;
         }
 
-
         return items;
     }
 
     public static void main(String[] args) {
         Queue<String> students = new Queue<>();
 
+        students.enqueue("Ted");
+        students.enqueue("Ted");
         students.enqueue("Alice");
         students.enqueue("Ethan");
         students.enqueue("Vanessa");
