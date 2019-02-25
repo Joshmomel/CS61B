@@ -76,7 +76,6 @@ public class QuickSort {
             Queue<Item> front = catenate(quickSort(less), equal);
             Queue<Item> result = catenate(front, quickSort(greater));
             return result;
-
         }
 
 
