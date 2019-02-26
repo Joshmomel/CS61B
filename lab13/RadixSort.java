@@ -115,7 +115,7 @@ public class RadixSort {
 
 
     public static void main(String[] args) {
-        String[] test = new String[]{"cat", "elephant", "ball", "fuck", "apple", "giant", "dick"};
+        String[] test = new String[]{"123","12","33213123"};
         String[] sorted = RadixSort.sort(test);
         for (String s : sorted) {
             System.out.println(s);
