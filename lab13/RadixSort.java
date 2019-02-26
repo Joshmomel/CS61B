@@ -53,6 +53,7 @@ public class RadixSort {
                 count[position] += 1;
             }
         }
+        
         int[] starts = new int[200];
         int pointer = 0;
         for (int i = 0; i < 200; i++) {
