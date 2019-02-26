@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Class for doing Radix sort
  *
@@ -16,21 +19,49 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
-        //get the max length
-        int max = 0;
-        for (String ascii : asciis) {
-            if (ascii.length() > max) {
-                max = ascii.length();
+        Queue<String>[] buckets = new Queue[256];
+        for (int i = 0; i < 256; i++)
+            buckets[i] = new LinkedList();
+
+        boolean sorted = false;
+        int lengthInc = 0;
+
+        String[] sortedArr = new String[asciis.length];
+        System.arraycopy(asciis, 0, sortedArr, 0, asciis.length);
+
+        while (!sorted) {
+            sorted = true;
+
+            for (String item : sortedArr) {
+                int index = item.length() - lengthInc - 1;
+                if (index >= 0) {
+                    sorted = false;
+                    int ofASCII = (int) item.charAt(index);
+                    buckets[ofASCII].add(item);
+                } else {
+                    buckets[(int) item.charAt(0)].add(item);
+                }
+
+
             }
+
+            lengthInc++;
+            int index = 0;
+
+            for (Queue<String> bucket : buckets) {
+                while (!bucket.isEmpty()) {
+                    sortedArr[index] = bucket.remove();
+                    index++;
+                }
+            }
+
+            //System.out.println();
+
         }
 
-        for (int i = 0; i < max; i++) {
-            sortHelperLSD(asciis, i, max);
-        }
+        //System.out.println("");
 
-
-        return asciis;
+        return sortedArr;
     }
 
     /**
@@ -84,7 +115,7 @@ public class RadixSort {
 
 
     public static void main(String[] args) {
-        String[] test = new String[]{"cat", "apple", "appld", "cs", "come", "be", "ted"};
+        String[] test = new String[]{"cat", "elephant", "ball", "fuck", "apple", "giant", "dick"};
         String[] sorted = RadixSort.sort(test);
         for (String s : sorted) {
             System.out.println(s);
