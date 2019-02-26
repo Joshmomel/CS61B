@@ -86,10 +86,9 @@ public class CountingSort {
             count[i - min]++;
         }
 
-
-        int[] starts = new int[Math.abs(min) + 1 + Math.abs(max)];
+        int[] starts = new int[max - min + 1];
         int position = 0;
-        for (int i = 0; i < starts.length; i++) {
+        for (int i = 0; i < starts.length; i += 1) {
             starts[i] = position;
             position += count[i];
         }

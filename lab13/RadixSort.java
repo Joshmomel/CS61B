@@ -49,7 +49,7 @@ public class RadixSort {
             }
             if (p < s.length()) {
                 p = Math.abs(p);
-                int position = s.charAt(p);
+                int position = (int)s.charAt(p);
                 count[position] += 1;
             }
         }
@@ -84,7 +84,7 @@ public class RadixSort {
 
 
     public static void main(String[] args) {
-        String[] test = new String[]{"cat", "123","ArrayIndexOutOfBoundsException"};
+        String[] test = new String[]{"cat","Array"};
         String[] sorted = RadixSort.sort(test);
         for (String s : sorted) {
             System.out.println(s);
