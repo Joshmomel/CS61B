@@ -41,7 +41,7 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index, int max) {
         // Optional LSD helper method for required LSD radix sort
-        int[] count = new int[127];
+        int[] count = new int[128];
         for (String s : asciis) {
             int p = max - index - 1;
             if (p >= s.length()) {
@@ -53,9 +53,9 @@ public class RadixSort {
                 count[position] += 1;
             }
         }
-        int[] starts = new int[127];
+        int[] starts = new int[128];
         int pointer = 0;
-        for (int i = 0; i < 127; i++) {
+        for (int i = 0; i < 128; i++) {
             starts[i] = pointer;
             pointer += count[i];
         }
@@ -84,7 +84,7 @@ public class RadixSort {
 
 
     public static void main(String[] args) {
-        String[] test = new String[]{"cat", ""};
+        String[] test = new String[]{"cat", "123","ArrayIndexOutOfBoundsException"};
         String[] sorted = RadixSort.sort(test);
         for (String s : sorted) {
             System.out.println(s);
