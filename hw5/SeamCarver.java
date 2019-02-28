@@ -58,8 +58,6 @@ public class SeamCarver {
     }
 
 
-
-
     private double calculateEnergiesY(int x, int y) {
         int upY = change(y, -1, height);
         int downY = change(y, 1, height);
@@ -71,7 +69,7 @@ public class SeamCarver {
         double gy = Math.abs(down.getGreen() - up.getGreen());
         double by = Math.abs(down.getBlue() - up.getBlue());
 
-        return  (ry * ry) + (gy * gy) + (by * by) ;
+        return (ry * ry) + (gy * gy) + (by * by);
     }
 
 
@@ -149,7 +147,7 @@ public class SeamCarver {
 
     private int find(double[][] minCost, int h, int w) {
         if (w == 0) {
-            double cmp = minCost[h-1][w+1] - minCost[h-1][w];
+            double cmp = minCost[h - 1][w + 1] - minCost[h - 1][w];
             if (cmp <= 0) {
                 return w + 1;
             } else {
@@ -157,36 +155,40 @@ public class SeamCarver {
             }
         }
         if (w == width - 1) {
-            double cmp = minCost[h-1][w-1] - minCost[h-1][w];
+            double cmp = minCost[h - 1][w - 1] - minCost[h - 1][w];
             if (cmp <= 0) {
                 return w - 1;
             } else {
                 return w;
             }
         }
-        double smallest = Math.min(minCost[h-1][w], Math.min(minCost[h-1][w-1], minCost[h-1][w+1]));
-        if (smallest == minCost[h-1][w]) {
+        double smallest = Math.min(minCost[h - 1][w],
+                Math.min(minCost[h - 1][w - 1], minCost[h - 1][w + 1]));
+        if (smallest == minCost[h - 1][w]) {
             return w;
-        } else if (smallest == minCost[h-1][w-1]) {
-            return w-1;
+        } else if (smallest == minCost[h - 1][w - 1]) {
+            return w - 1;
         }
-        return w+1;
+        return w + 1;
     }
 
     private double getMin(double[][] minCost, int h, int w) {
         if (w == 0) {
-            return Math.min(minCost[h-1][w+1], minCost[h-1][w]);
+            return Math.min(minCost[h - 1][w + 1], minCost[h - 1][w]);
         }
         if (w == width - 1) {
-            return Math.min(minCost[h-1][w-1], minCost[h-1][w]);
+            return Math.min(minCost[h - 1][w - 1], minCost[h - 1][w]);
         }
-        double temp = Math.min(minCost[h-1][w-1], minCost[h-1][w]);
-        return Math.min(temp, minCost[h-1][w+1]);
+        double temp = Math.min(minCost[h - 1][w - 1], minCost[h - 1][w]);
+        return Math.min(temp, minCost[h - 1][w + 1]);
     }
 
 
     // remove horizontal seam from picture
     public void removeHorizontalSeam(int[] seam) {
+        if (seam.length == 0) {
+            return;
+        }
         if (checkSeam(seam)) {
             this.picture = new Picture(SeamRemover.removeHorizontalSeam(this.picture, seam));
             height--;
@@ -197,6 +199,9 @@ public class SeamCarver {
 
 
     public void removeVerticalSeam(int[] seam) {
+        if (seam.length == 0) {
+            return;
+        }
         if (checkSeam(seam)) {
             this.picture = new Picture(SeamRemover.removeVerticalSeam(this.picture, seam));
             width--;
@@ -204,6 +209,7 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
     }
+
     private boolean checkSeam(int[] seam) {
         for (int i = 0; i < seam.length - 1; i++) {
             if (Math.abs(seam[i] - seam[i + 1]) > 1) {
