@@ -112,7 +112,6 @@ public class SeamCarver {
 
     // sequence of indices for vertical seam
     public int[] findVerticalSeam() {
-        double[][] energyNum = new double[height][width];
         double[][] minCost = new double[height][width];
         int[] ans = new int[height];
 
@@ -124,32 +123,11 @@ public class SeamCarver {
         for (int h = 1; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 double energy = energy(w, h);
-                energyNum[h][w] = energy;
-
                 double min = getMin(minCost, h, w);
                 minCost[h][w] = energy + min;
 
             }
         }
-
-        for (double[] doubles : energyNum) {
-            for (double n : doubles) {
-                System.out.print(n);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
-        System.out.println(" -------- ");
-
-        for (double[] doubles : minCost) {
-            for (double aDouble : doubles) {
-                System.out.print(aDouble + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println(" -------- ");
 
         double minEnd = Double.MAX_VALUE;
         for (int w = 0; w < width; w++) {
@@ -165,11 +143,6 @@ public class SeamCarver {
             ans[countH] = find(minCost, countH + 1, ans[countH + 1]);
             countH -= 1;
         }
-
-        for (int an : ans) {
-            System.out.println(an);
-        }
-
 
         return ans;
     }
