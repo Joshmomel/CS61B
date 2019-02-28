@@ -5,5 +5,5 @@ my task on 1 March 2019
 Update the read file such that it can read all documents.
 Finsh all the taks.
 
-autograder to be tested 
+AUTOGRADER SCORE 25.333 / 32.0
 

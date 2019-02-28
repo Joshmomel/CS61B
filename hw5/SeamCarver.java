@@ -123,7 +123,6 @@ public class SeamCarver {
                 double energy = energy(w, h);
                 double min = getMin(minCost, h, w);
                 minCost[h][w] = energy + min;
-
             }
         }
 
