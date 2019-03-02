@@ -1,0 +1,9 @@
+my lab14 solution
+
+my task on 2 March 2019
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+Autograder to be test 
+
