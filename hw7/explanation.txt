@@ -1,0 +1,9 @@
+my hw7 solution
+
+my task on 3 March 2019
+
+Update the read file such that it can read all documents.
+Finsh all the taks.
+
+Autograder to be tested
+
